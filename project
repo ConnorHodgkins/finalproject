@@ -1,0 +1,179 @@
+//Sets variable for the bitmoji
+var drawBitmoji = function(x, y, h) {
+//Code for the bitmojis head
+    var drawHead = function(x, y, h) {
+fill(247, 239, 217);
+noStroke();
+ellipse(x, y, 77, h); //head
+fill(255, 255, 255);
+fill(66, 24, 24);
+quad(x + 59, y - 71, x - 24, y - 31, x - 30, y - 9, x - 78, y - 44); //left hair
+quad(x - 33, y - 66, x - 17, y + 11, x - 46, y - 18, x + 67, y - 32); // right hair
+fill(14, 89, 29);
+ellipse(x - 12, y - 9, 16, 12);
+ellipse(x + 24, y - 9, 16, 11);
+fill(181, 150, 119);
+triangle(x - 2, y + 17, x + 1, y - 1, x + 21, y + 1);
+    };
+//code the bitmojis body
+    var drawBody = function(x, y, h) {
+fill(10, 9, 9);
+arc(x + 1, y + 17, 28, 53, 8, 185);
+fill(21, 35, 235);
+rect(x - 21, y + 49, 49, 105);
+fill(255, 0, 0);
+text("CH", x - 12, y + 67, 50, 50);
+    };
+
+    drawHead(x, y, h);
+    drawBody(x, y, h);
+};
+//Constructor for button
+var Button = function(config) {
+    this.x = config.x || 0;
+    this.y = config.y || 0;
+    this.width = config.width || 150;
+    this.height = config.height || 50;
+    this.label = config.label || "Click";
+    this.onClick = config.onClick || function() {};
+};
+//Defines the behavior of the button
+Button.prototype.draw = function() {
+    fill(255, 0, 153);
+    rect(this.x, this.y, this.width, this.height, 5);
+    fill(0, 0, 0);
+    text(this.label, this.x+10, this.y+this.height/4);
+};
+//Defines the behavior of the button
+Button.prototype.isMouseInside = function() {
+    return mouseX > this.x &&
+mouseX < (this.x + this.width) &&
+ mouseY > this.y &&
+ mouseY < (this.y + this.height);
+};
+//Defines the behavior of the button
+Button.prototype.handleMouseClick = function() {
+    if (this.isMouseInside()) {
+this.onClick();
+    }
+};
+//Sets button variable
+var btn1 = new Button({
+    x: 100,
+    y: 300,
+    label: "Click!",
+    onClick: function() {
+//Draws new background when button is pressed
+background(217, 210, 210);
+ drawBitmoji(350, 300, 100); // Draws bitmoji when button is pressed
+ fill(0, 30, 255);
+ textSize(13);
+ //Adds new text when button is pressed
+ text("Why should you move to these states?", 0, 80);
+ text("Oregon: Oregon has amazing nature and beatuful scenery.", 0, 100);
+ text("New York: New York has many oppurtunities and things to do.", 0, 120);
+ text("California: California has amazing weather and lots of entertainment.", 0, 140);
+ text("Florida: Florida has amazing beaches and activites to do.", 0, 160);
+ text("Colorado: Colorado has awesome skiing and outdoors activities.", 0, 180);
+    }
+});
+//Intro Screen
+background(235, 247, 255);
+fill(28, 92, 219);
+textSize(25);
+
+text("What State Should You Move To?", 0, 200);
+text("Click Anywhere!", 0, 300);
+text("By: Connor Hodgkins", 0, 350);
+drawBitmoji(350, 300, 100);
+textSize(12);
+mouseClicked = function(){
+//Sets the Current Questuon to 1
+var currentQuestion = 1;
+var states = ["California", "New York", "Colorado", "Florida", "Oregon"];
+background(99, 91, 91);
+//variable that draws each question
+var drawQuestion = function(questionText) {
+    fill(44, 196, 199);
+    rect(20, 20, 360, 50);
+    fill(0, 0, 0);
+    text(questionText, 50, 50);
+};
+//Variable that holds yes or no answers
+var drawAnswerOptions = function() {
+    fill(240, 45, 19);
+    rect(50, 100, 101, 50);
+    fill(8, 8, 8);
+    text("No", 60, 130);
+    fill(24, 199, 80);
+    rect(200, 100, 100, 50);
+    fill(13, 12, 12);
+    text("Yes", 220, 130);
+};
+
+
+
+var drawResult = function(states) {
+    textSize(12);
+    fill(201, 36, 201);
+    rect(20, 200, 360, 67);
+    fill(0, 0, 0);
+    //When you get a result it adds the states that match your answers
+    text("You should consider living in: " + states.join(", "), 30, 230);
+//adds button defined above
+btn1.draw();
+};
+//draws question 1
+drawQuestion("Do you want to move to a big state?");
+//draws answer options
+drawAnswerOptions();
+//When mouse is clicked it starts if/ else statements. Decision tree to find what states you could match with
+mouseClicked = function() {
+    if (mouseX > 50 && mouseX < 150 && mouseY > 100 && mouseY < 150 && currentQuestion === 1) {
+drawQuestion("Do you like living in the North?");
+currentQuestion = 2;
+    } else if (mouseX > 200 && mouseX < 300 && mouseY > 100 && mouseY < 150 && currentQuestion === 1) {
+ drawQuestion("Do you like professional sports?");
+ currentQuestion = 3;
+    } else if (mouseX > 50 && mouseX < 150 && mouseY > 100 && mouseY < 150 && currentQuestion === 2) {
+drawQuestion("Do you like warm weather?");
+currentQuestion = 4;
+    } else if (mouseX > 200 && mouseX < 300 && mouseY > 100 && mouseY < 150 && currentQuestion === 2) {
+drawQuestion("Do you like the beach?");
+currentQuestion = 5;
+    } else if (mouseX > 50 && mouseX < 150 && mouseY > 100 && mouseY < 150 && currentQuestion === 3) {
+ drawQuestion("Do you want to live in a state with a coastline?");
+currentQuestion = 6;
+    } else if (mouseX > 200 && mouseX < 300 && mouseY > 100 && mouseY < 150 && currentQuestion === 3) {
+drawQuestion("Do you like country music?");
+currentQuestion = 7;
+    } else if (mouseX > 50 && mouseX < 150 && mouseY > 100 && mouseY < 150 && currentQuestion === 4) {
+drawQuestion("Do you like the rural areas?");
+    currentQuestion = 8;
+    } else if (mouseX > 200 && mouseX < 300 && mouseY > 100 && mouseY < 150 && currentQuestion === 4) {
+drawQuestion("Do you like skiing?");
+currentQuestion = 9;
+    } else if (mouseX > 50 && mouseX < 150 && mouseY > 100 && mouseY < 150 && currentQuestion === 5) {
+drawQuestion("Do you like the city?");
+currentQuestion = 10;
+    } else if (mouseX > 200 && mouseX < 300 && mouseY > 100 && mouseY < 150 && currentQuestion === 5) {
+drawQuestion("Do you like the outdoors?");
+    } else if (currentQuestion === 6 || currentQuestion === 7 || currentQuestion === 8 || currentQuestion === 9 || currentQuestion === 10 || currentQuestion === 11) {
+var possibleStates = [];
+// Based on the answers pushes the possible states into the array with states that match.
+if (currentQuestion === 3 || currentQuestion === 8 || currentQuestion === 9 || currentQuestion === 2) {
+ possibleStates.push("Colorado"); }
+ if (currentQuestion === 6 || currentQuestion === 10 || currentQuestion === 4 || currentQuestion === 1) {
+ possibleStates.push("California");}
+if (currentQuestion === 6 || currentQuestion === 3 || currentQuestion === 5 || currentQuestion === 4 || currentQuestion === 1) {
+ possibleStates.push("Florida");}
+if (currentQuestion === 3 || currentQuestion === 6 || currentQuestion === 10 || currentQuestion === 2 || currentQuestion === 1) {
+possibleStates.push("New York");}
+if (currentQuestion === 2 || currentQuestion === 7 || currentQuestion === 8 || currentQuestion === 9) {
+possibleStates.push("Oregon");
+} 
+//draws the results of the quiz
+drawResult(possibleStates);
+}
+btn1.handleMouseClick();
+};};
